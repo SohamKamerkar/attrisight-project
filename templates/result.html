@@ -232,7 +232,35 @@ Print Report
 
 </div>
 
+<div class="risk-factors">
 
+<h3>Key Factors Influencing Prediction</h3>
+
+<ul>
+
+{% for factor, value in factors %}
+
+<li>
+
+<span class="factor-name">{{ factor }}</span>
+
+<span class="factor-impact">
+
+{% if value > 0 %}
++ Increased Risk
+{% else %}
+- Reduced Risk
+{% endif %}
+
+</span>
+
+</li>
+
+{% endfor %}
+
+</ul>
+
+</div>
 
 <script>
 
