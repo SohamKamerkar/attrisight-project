@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Attrition Prediction Result</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<!-- Loading Screen -->
+<div class="loading-screen" id="loading">
+<div class="loading-spinner">
+<i class="fas fa-brain"></i>
+<p>Generating Risk Report...</p>
+</div>
+</div>
+
+
+
+<div class="result-page">
+
+<!-- HEADER -->
+<section class="result-hero">
+
+<div class="container">
+
+<div class="result-header">
+
+<a href="/" class="back-button">
+<i class="fas fa-arrow-left"></i>
+New Assessment
+</a>
+
+<h1 class="result-title">
+<i class="fas fa-chart-line"></i>
+Attrition Risk Report
+</h1>
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<!-- RESULT SECTION -->
+<section class="result-section">
+
+<div class="container">
+
+<div class="result-card">
+
+<!-- RISK ICON -->
+
+<div class="result-visual">
+
+{% if probability > 70 %}
+
+<div class="risk-high">
+<i class="fas fa-exclamation-triangle"></i>
+<div class="risk-badge high">HIGH RISK</div>
+</div>
+
+{% elif probability > 40 %}
+
+<div class="risk-high">
+<i class="fas fa-exclamation-circle"></i>
+<div class="risk-badge high">MEDIUM RISK</div>
+</div>
+
+{% else %}
+
+<div class="risk-low">
+<i class="fas fa-check-circle"></i>
+<div class="risk-badge low">LOW RISK</div>
+</div>
+
+{% endif %}
+
+</div>
+
+
+
+<!-- PREDICTION RESULT -->
+
+<div class="result-content">
+
+<h2 class="prediction-text">
+Prediction: <b>{{ prediction }}</b>
+</h2>
+
+
+<div class="probability-display">
+
+<div class="probability-value">
+{{ "%.1f"|format(probability|float) }}%
+</div>
+
+<div class="probability-label">
+Attrition Probability
+</div>
+
+</div>
+
+
+<!-- Risk Bar -->
+
+<div class="risk-bar">
+<div class="risk-fill" style="width: {{ probability }}%"></div>
+</div>
+
+
+
+<div class="result-insights">
+
+<div class="insight">
+<i class="fas fa-bolt"></i>
+<span>Immediate HR action recommended if risk exceeds 70%</span>
+</div>
+
+<div class="insight">
+<i class="fas fa-user-shield"></i>
+<span>Monitor employee engagement if risk is between 40–70%</span>
+</div>
+
+<div class="insight">
+<i class="fas fa-check"></i>
+<span>Low risk employees generally show stable engagement levels</span>
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- ACTION BUTTONS -->
+
+<div class="result-actions">
+
+<a href="/" class="action-button primary">
+<i class="fas fa-plus"></i>
+Analyze Another Employee
+</a>
+
+<button class="action-button secondary" onclick="printResult()">
+<i class="fas fa-print"></i>
+Print Report
+</button>
+
+</div>
+
+
+</div>
+
+
+
+<!-- EMPLOYEE PROFILE SUMMARY -->
+
+<div class="profile-summary">
+
+<h3>Employee Profile Evaluated</h3>
+
+<div class="profile-grid">
+
+<div class="profile-item">
+<span class="label">Age</span>
+<span class="value">{{ employee.Age }}</span>
+</div>
+
+<div class="profile-item">
+<span class="label">Monthly Income</span>
+<span class="value">₹ {{ employee.MonthlyIncome }}</span>
+</div>
+
+<div class="profile-item">
+<span class="label">Years At Company</span>
+<span class="value">{{ employee.YearsAtCompany }}</span>
+</div>
+
+<div class="profile-item">
+<span class="label">Distance From Home</span>
+<span class="value">{{ employee.DistanceFromHome }} km</span>
+</div>
+
+<div class="profile-item">
+<span class="label">Department</span>
+<span class="value">{{ employee.Department }}</span>
+</div>
+
+<div class="profile-item">
+<span class="label">Job Role</span>
+<span class="value">{{ employee.JobRole }}</span>
+</div>
+
+<div class="profile-item">
+<span class="label">Gender</span>
+<span class="value">{{ employee.Gender }}</span>
+</div>
+
+<div class="profile-item">
+<span class="label">Marital Status</span>
+<span class="value">{{ employee.MaritalStatus }}</span>
+</div>
+
+<div class="profile-item">
+<span class="label">Business Travel</span>
+<span class="value">{{ employee.BusinessTravel }}</span>
+</div>
+
+<div class="profile-item">
+<span class="label">Overtime</span>
+<span class="value">{{ employee.OverTime }}</span>
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+</div>
+
+
+
+<script>
+
+window.addEventListener('load', () => {
+
+const loader = document.getElementById('loading');
+
+loader.style.opacity = '0';
+
+setTimeout(() => {
+loader.style.display = 'none';
+}, 300);
+
+});
+
+function printResult(){
+window.print();
+}
+
+</script>
+
+</body>
+</html>
